@@ -1,16 +1,5 @@
-# flutter_application_1
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Nome: João Victor de Oliveira
+RA: 202310130
+Descrição: App para criação de tarefas simples, cada tarefa tem a sua data de inicio e a sua data de conclusão. Podemos adicionar a data de conclusão para finalizar a tarefa, incluir responsável pela tarefa e adicionar uma tag para realizar a identificação daquela tarefa.
+Campo personalizado: tagIdentificação
+Dificuldade encontrada: Encontrar o arquivo .db para exibir no db browser.
