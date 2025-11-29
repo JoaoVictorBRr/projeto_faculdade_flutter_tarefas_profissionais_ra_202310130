@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import './database/database_helper.dart';
+import './screen/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,17 +19,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mini Cadastro de Tarefas',
-      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Tarefas Profissionais')),
-        body: const Center(
-          child: Text(
-            'Banco criado com sucesso!\nVerifique o console.',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
-          ),
-        ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
+
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+        Locale('en', 'US'),
+      ],
+      locale: const Locale('pt', 'BR'),
+
+      home: const HomeScreen(),
     );
   }
 }

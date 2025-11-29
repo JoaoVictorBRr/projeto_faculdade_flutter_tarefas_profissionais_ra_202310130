@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import '../models/tarefa.dart';
+import '../../models/tarefa.dart';
 import 'dart:io';
 
 class DatabaseHelper {
@@ -59,13 +59,11 @@ class DatabaseHelper {
     print('📄 Nome do arquivo: $_databaseName');
   }
 
-  // Método COMPLETO para testar o banco
   Future<void> testDatabase() async {
     final db = await database;
     print('✅ Banco de dados está funcionando!');
     print('📊 Verificando estrutura da tabela...\n');
 
-    // Verificar estrutura da tabela
     final columns = await db.rawQuery('PRAGMA table_info($tableTarefas)');
     print('📋 Campos da tabela "$tableTarefas":');
     for (var column in columns) {
@@ -77,6 +75,109 @@ class DatabaseHelper {
     }
     print('\n✨ Total de campos: ${columns.length}');
     print('✨ Caminho completo: ${db.path}');
+  }
+
+  // ==================== MÉTODOS CRUD ====================
+
+  // CREATE - Inserir nova tarefa
+  Future<int> inserirTarefa(Tarefa tarefa) async {
+    final db = await database;
+    final id = await db.insert(tableTarefas, tarefa.toMap());
+    print('✅ Tarefa inserida com ID: $id');
+    return id;
+  }
+
+  // READ - Listar todas as tarefas
+  Future<List<Tarefa>> listarTarefas() async {
+    final db = await database;
+    final result = await db.query(
+      tableTarefas,
+      orderBy: 'criadoEm DESC', // Mais recentes primeiro
+    );
+
+    print('📋 ${result.length} tarefas encontradas');
+    return result.map((map) => Tarefa.fromMap(map)).toList();
+  }
+
+  // READ - Buscar tarefa por ID
+  Future<Tarefa?> buscarTarefaPorId(int id) async {
+    final db = await database;
+    final result = await db.query(
+      tableTarefas,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (result.isNotEmpty) {
+      return Tarefa.fromMap(result.first);
+    }
+    return null;
+  }
+
+  // UPDATE - Atualizar tarefa existente
+  Future<int> atualizarTarefa(Tarefa tarefa) async {
+    final db = await database;
+    tarefa.atualizarDataEdicao(); // Atualiza editadoEm
+
+    final count = await db.update(
+      tableTarefas,
+      tarefa.toMap(),
+      where: 'id = ?',
+      whereArgs: [tarefa.id],
+    );
+
+    print('✅ Tarefa atualizada: ${tarefa.titulo}');
+    return count;
+  }
+
+  // DELETE - Excluir tarefa
+  Future<int> excluirTarefa(int id) async {
+    final db = await database;
+    final count = await db.delete(
+      tableTarefas,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    print('🗑️ Tarefa excluída (ID: $id)');
+    return count;
+  }
+
+  // FILTROS - Buscar tarefas por prioridade
+  Future<List<Tarefa>> buscarPorPrioridade(String prioridade) async {
+    final db = await database;
+    final result = await db.query(
+      tableTarefas,
+      where: 'prioridade = ?',
+      whereArgs: [prioridade],
+      orderBy: 'criadoEm DESC',
+    );
+
+    return result.map((map) => Tarefa.fromMap(map)).toList();
+  }
+
+  // FILTROS - Buscar tarefas finalizadas
+  Future<List<Tarefa>> buscarFinalizadas() async {
+    final db = await database;
+    final result = await db.query(
+      tableTarefas,
+      where: 'dataFinalizacao IS NOT NULL',
+      orderBy: 'dataFinalizacao DESC',
+    );
+
+    return result.map((map) => Tarefa.fromMap(map)).toList();
+  }
+
+  // FILTROS - Buscar tarefas pendentes
+  Future<List<Tarefa>> buscarPendentes() async {
+    final db = await database;
+    final result = await db.query(
+      tableTarefas,
+      where: 'dataFinalizacao IS NULL',
+      orderBy: 'dataInicio ASC',
+    );
+
+    return result.map((map) => Tarefa.fromMap(map)).toList();
   }
 
   Future close() async {
