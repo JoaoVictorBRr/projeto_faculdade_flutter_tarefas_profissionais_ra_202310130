@@ -127,11 +127,11 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('dd/MM/yyyy');
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEdicao ? 'Editar Tarefa' : 'Nova Tarefa'),
-        backgroundColor: Colors.blue,
       ),
       body: Form(
         key: _formKey,
@@ -141,10 +141,10 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
             // Título
             TextFormField(
               controller: _tituloController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Título *',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.title),
+                prefixIcon: Icon(Icons.title, color: theme.primaryColor),
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -158,10 +158,10 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
             // Descrição
             TextFormField(
               controller: _descricaoController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Descrição *',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.description),
+                prefixIcon: Icon(Icons.description, color: theme.primaryColor),
               ),
               maxLines: 3,
               validator: (value) {
@@ -176,10 +176,10 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
             // Responsável
             TextFormField(
               controller: _responsavelController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Responsável *',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.person),
+                prefixIcon: Icon(Icons.person, color: theme.primaryColor),
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
@@ -193,10 +193,10 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
             // Prioridade
             DropdownButtonFormField<String>(
               value: _prioridade,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Prioridade *',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.priority_high),
+                prefixIcon: Icon(Icons.priority_high, color: theme.primaryColor),
               ),
               items: ['Baixa', 'Média', 'Alta']
                   .map((p) => DropdownMenuItem(value: p, child: Text(p)))
@@ -209,8 +209,8 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
             ListTile(
               title: const Text('Data de Início *'),
               subtitle: Text(dateFormat.format(_dataInicio)),
-              leading: const Icon(Icons.calendar_today),
-              trailing: const Icon(Icons.edit),
+              leading: Icon(Icons.calendar_today, color: theme.primaryColor),
+              trailing: Icon(Icons.edit, color: theme.colorScheme.secondary),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 side: BorderSide(color: Colors.grey.shade400),
@@ -227,7 +227,7 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
                     ? dateFormat.format(_dataFinalizacao!)
                     : 'Não finalizada',
               ),
-              leading: const Icon(Icons.event_available),
+              leading: Icon(Icons.event_available, color: theme.primaryColor),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -236,7 +236,7 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
                       icon: const Icon(Icons.clear),
                       onPressed: () => setState(() => _dataFinalizacao = null),
                     ),
-                  const Icon(Icons.edit),
+                  Icon(Icons.edit, color: theme.colorScheme.secondary),
                 ],
               ),
               shape: RoundedRectangleBorder(
@@ -250,10 +250,10 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
             // Tag Identificação (campo personalizado)
             TextFormField(
               controller: _tagController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Tag de Identificação',
                 border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.label),
+                prefixIcon: Icon(Icons.label, color: theme.primaryColor),
                 helperText: 'Campo opcional',
               ),
             ),
@@ -266,8 +266,6 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
               label: Text(_isEdicao ? 'Atualizar' : 'Salvar'),
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(16),
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
               ),
             ),
           ],

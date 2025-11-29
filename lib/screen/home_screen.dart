@@ -107,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tarefas Profissionais'),
-        backgroundColor: Colors.blue,
         actions: [
           PopupMenuButton<String>(
             onSelected: (valor) {
@@ -149,11 +148,11 @@ class _HomeScreenState extends State<HomeScreen> {
           // Resumo
           Container(
             padding: const EdgeInsets.all(16),
-            color: Colors.blue[50],
+            color: Theme.of(context).primaryColor.withOpacity(0.1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildContador('Total', _tarefas.length, Colors.blue),
+                _buildContador('Total', _tarefas.length, Theme.of(context).primaryColor),
                 _buildContador(
                   'Pendentes',
                   _tarefas.where((t) => !t.isFinalizada).length,
@@ -244,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: const Icon(Icons.edit, color: Colors.blue),
+              icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
               onPressed: () => _abrirFormulario(tarefa),
             ),
             IconButton(

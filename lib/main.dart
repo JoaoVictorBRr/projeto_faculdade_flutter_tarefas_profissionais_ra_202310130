@@ -21,7 +21,34 @@ class MyApp extends StatelessWidget {
       title: 'Mini Cadastro de Tarefas',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
+        primaryColor: Colors.deepOrangeAccent,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepOrangeAccent,
+          primary: Colors.deepOrangeAccent,
+          secondary: Colors.redAccent,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.deepOrangeAccent,
+          foregroundColor: Colors.white,
+          elevation: 2,
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.redAccent,
+          foregroundColor: Colors.white,
+        ),
+        cardTheme: CardThemeData(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.deepOrangeAccent,
+            foregroundColor: Colors.white,
+          ),
+        ),
         useMaterial3: true,
       ),
 
